@@ -4,10 +4,10 @@
         NBA
       </a>
       <ul class="navbar-nav mr-auto">
+        @auth
         <li class="nav-item">
           <a class="nav-link" href="/">All teams</a>
         </li>
-        @auth
         <li class="nav-item">
           <strong> Username: {{ auth()->user()->name }} </strong>
         </li>
