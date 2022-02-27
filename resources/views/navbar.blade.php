@@ -7,6 +7,24 @@
         <li class="nav-item">
           <a class="nav-link" href="/">All teams</a>
         </li>
+        @auth
+        <li class="nav-item">
+          <strong> Username: {{ auth()->user()->name }} </strong>
+        </li>
+        <li class="nav-item">
+          <form action="/logout" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary">Logout</button>
+          </form>
+        </li>
+      @else
+        <li class="nav-item">
+          <a class="nav-link" href="/register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+      @endauth
       </ul>
     </div>
   </nav>
