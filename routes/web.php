@@ -36,5 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/team/{team}/comments', [CommentController::class, 'store'])->name('createComment');
 
 Route::get('/news', [NewsController::class, 'index']);
+Route::get('/news/create', [NewsController::class, 'create']);
 Route::get('/news/{news}', [NewsController::class, 'show'])->name('news');
 Route::get('/news/team/{teamName}', [NewsController::class, 'getNewsByTeam'])->name('newsForTeam');
+Route::post('/news', [NewsController::class, 'store']);

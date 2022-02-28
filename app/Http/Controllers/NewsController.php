@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateNewsRequest;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Team;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Arr;
 
 class NewsController extends Controller
 {
@@ -15,7 +18,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $allNews = News::with('user')->paginate(7);
+        $allNews = News::with('user')->orderBy('created_at', 'desc')->paginate(7);
         return view('news.index', compact('allNews'));
     }
 
@@ -29,5 +32,21 @@ class NewsController extends Controller
         $team = Team::where('name', $teamName)->firstOrFail();
         $news = $team->news()->paginate(10);
         return view('news.team-news', compact('team', 'news'));
+    }
+
+    public function create()
+    {
+        $teams = Team::all();
+        return view('news.create', compact('teams'));
+    }
+
+    public function store(CreateNewsRequest $request)
+    {
+    $data = $request->validated();
+    $news = auth()->user()->news()->create($data);
+    $news->teams()->attach(Arr::get($data, 'teams', []));
+
+    Session::flash('status_message', "Thank you for publishing article on www.nba.com");
+    return redirect('/news');
     }
 }
