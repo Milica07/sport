@@ -10,13 +10,20 @@
 
   </head>
   <body>
-    @include('navbar')
+    @include('partials.navbar')
     @if(session('status_message'))
       <div class="alert alert-info">{{session('status_message')}}</div>
       <br/>
     @endif
     <div class="container">
-      @yield('content')
+        <div class="row">
+            <div class="col-md-2">
+              @include('partials.sidebar')
+            </div>
+            <div class="col-md-10">
+              @yield('content')
+            </div>
+        </div>
     </div>
   </body>
 </html>
